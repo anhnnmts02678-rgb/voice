@@ -3,10 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <title>Voice chuẩn</title>
+  <style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+
+    /* nền gradient */
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 350px;
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+button {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+</style>
 </head>
 <body>
 
-<button onclick="speak()">Nghe giọng 🎧</button>
+<button onclick="speak()">Bắt đầu 🎧</button>
 
 <script>
 function speak() {
