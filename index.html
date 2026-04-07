@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice chuẩn</title>
+</head>
+<body>
+
+<button onclick="speak()">Nghe giọng 🎧</button>
+
+<script>
+let audioQueue = [];
+let isPlaying = false;
+
+function speak() {
+  const text = `Dạo này mình hay tự làm mấy món đồ nhỏ nhỏ… như mấy cái móc khóa len này nè, ngồi móc từng chút thấy cũng chill lắm mà làm xong nhìn dễ thương cực, mỗi cái là một kiểu không cái nào giống cái nào luôn, nên mình nghĩ đồ handmade không chỉ là đồ dùng mà còn là chút gì đó rất riêng, nếu bạn cũng thích mấy thứ xinh xinh như vậy thì chắc bạn sẽ hiểu cảm giác này á.`;
+
+  // chia nhỏ theo dấu phẩy và chấm
+  const parts = text.match(/[^,\.]+[,\.\?]?/g);
+
+  audioQueue = parts.map(part => {
+    const url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=vi&client=tw-ob&q=" 
+                + encodeURIComponent(part.trim());
+    return new Audio(url);
+  });
+
+  playNext();
+}
+
+function playNext() {
+  if (audioQueue.length === 0) {
+    isPlaying = false;
+    return;
+  }
+
+  isPlaying = true;
+  const audio = audioQueue.shift();
+  audio.play().catch(err => console.log(err));
+
+  audio.onended = () => {
+    playNext();
+  };
+}
+</script>
+
+</body>
+</html>
