@@ -10,26 +10,33 @@
 
 <script>
 function speak() {
-    const text = "Xin chào, đây là giọng đọc tiếng Việt nè";
+    const text = "Xin chào, đây là test giọng đọc";
 
     const utterance = new SpeechSynthesisUtterance(text);
 
-    let voices = speechSynthesis.getVoices();
+    function run() {
+        let voices = speechSynthesis.getVoices();
 
-    // tìm giọng tiếng Việt
-    let voiceVN = voices.find(v => v.lang === "vi-VN");
+        let voiceVN = voices.find(v => v.lang === "vi-VN");
 
-    if (voiceVN) {
-        utterance.voice = voiceVN;
-    } else {
-        alert("Máy bạn không có giọng tiếng Việt 😢");
-        utterance.voice = voices[0]; // fallback
+        if (voiceVN) {
+            utterance.voice = voiceVN;
+        } else {
+            utterance.voice = voices[0];
+        }
+
+        utterance.lang = "vi-VN";
+
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
     }
 
-    utterance.lang = "vi-VN";
-
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
+    // đảm bảo load voice xong mới chạy
+    if (speechSynthesis.getVoices().length === 0) {
+        speechSynthesis.onvoiceschanged = run;
+    } else {
+        run();
+    }
 }
 </script>
 </body>
