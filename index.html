@@ -7,19 +7,42 @@
 <body>
 
 <button onclick="speak()">Nghe giọng 🎧</button>
-
-<button onclick="speak()">Nghe giọng</button>
+<button onclick="stop()">Dừng ⛔</button>
 
 <script>
+let voices = [];
+
+function loadVoices() {
+    voices = speechSynthesis.getVoices();
+}
+
+// Load danh sách giọng
+loadVoices();
+speechSynthesis.onvoiceschanged = loadVoices;
+
 function speak() {
     const text = "Xin chào, đây là test giọng đọc";
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "vi-VN";
 
-    speechSynthesis.cancel(); // fix lỗi không phát
+    // chọn giọng tiếng Việt nếu có
+    const voiceVN = voices.find(v => v.lang === "vi-VN");
+    if (voiceVN) {
+        utterance.voice = voiceVN;
+    }
+
+    utterance.rate = 1;   // tốc độ (0.5 - 2)
+    utterance.pitch = 1;  // cao độ
+
+    speechSynthesis.cancel(); // tránh bị chồng giọng
     speechSynthesis.speak(utterance);
 }
+
+function stop() {
+    speechSynthesis.cancel();
+}
 </script>
+
 </body>
 </html>
